@@ -43,7 +43,7 @@ namespace ScanUploadedBlobFunction
                 {
                     string cleanContainerName = Environment.GetEnvironmentVariable("cleanContainerName");
                     //MoveBlob(scanResults.fileName, srcContainerName, cleanContainerName, log).GetAwaiter().GetResult();
-                    //log.LogInformation("The file is clean. It has been moved from the unscanned container to the clean container");
+                    log.LogInformation("The file is clean. No need for move");
                 }
 
                 catch (Exception e)
@@ -68,10 +68,10 @@ namespace ScanUploadedBlobFunction
             if (await srcBlob.ExistsAsync())
             {
                 log.LogInformation("MoveBlob: Started file copy");
-                //await destBlob.StartCopyFromUriAsync(srcBlob.Uri);
+                await destBlob.StartCopyFromUriAsync(srcBlob.Uri);
                 log.LogInformation("MoveBlob: Done file copy");
-                //await srcBlob.DeleteAsync();
-                //log.LogInformation("MoveBlob: Source file deleted");
+                await srcBlob.DeleteAsync();
+                log.LogInformation("MoveBlob: Source file deleted");
             }
         }
     }
