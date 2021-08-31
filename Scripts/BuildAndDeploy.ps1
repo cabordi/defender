@@ -1,15 +1,15 @@
 param (
-    $sourceCodeContainerName = "release-container",
-    $sourceCodeStorageAccountName = "storage-account-name",
-    $targetContainerName = "upload-container",
-    $targetStorageAccountName = "storage-with-antivirus",
-    $targetResourceGroup = "resource-group-name",
-    $subscriptionID = "subscription-id",
-    $deploymentResourceGroupName = "resource-group-name",
-    $deploymentResourceGroupLocation = "location",
-    $vmUserName = "username",
+    $sourceCodeContainerName = "code-release-container",
+    $sourceCodeStorageAccountName = "webuildstorageblob",
+    $targetContainerName = "container1",
+    $targetStorageAccountName = "webuildstorageblob",
+    $targetResourceGroup = "WeBuildTest",
+    $subscriptionID = "71639973-376d-4c83-952f-14f1cd95cf04",
+    $deploymentResourceGroupName = "WeBuildTest",
+    $deploymentResourceGroupLocation = "westeurope",
+    $vmUserName = "vm_for_antivirus",
     $ArmTemplatFile = "$PSScriptRoot/../ARM_template/AntivirusAutomationForStorageTemplate.json",
-    [SecureString] $vmPassword = "password"
+    [SecureString] $vmPassword = "pw_forantivirus1"
 )
 
 $ScanHttpServerRoot = "$PSScriptRoot\..\ScanHttpServer"
