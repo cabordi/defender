@@ -82,7 +82,7 @@
         },
         "ScanHttpServerZipURL": {
             "type": "string",
-            "defaultValue": "https://github.com/cabordi/defender/releases/latest/download/ScanHttpServer.zip",
+            "defaultValue": "https://github.com/Azure/azure-storage-av-automation/releases/latest/download/ScanHttpServer.zip",
             "metadata": {
                 "description": "URL of the zipped Function Code, default value points to the latest build."
             }
@@ -96,7 +96,7 @@
         },
         "VMInitScriptURL": {
             "type": "string",
-            "defaultValue": "https://github.com/cabordi/defender/releases/latest/download/VMInit.ps1",
+            "defaultValue": "https://github.com/Azure/azure-storage-av-automation/releases/latest/download/VMInit.ps1",
             "metadata": {
                 "description": "URL of the VMInit.ps1 script, default value points to the latest build."
             }
