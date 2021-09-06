@@ -24,9 +24,41 @@ namespace ScanUploadedBlobFunction
             }
             log.LogInformation($"Scan Results - {scanResults.ToString(", ")}");
             log.LogInformation("Handalng Scan Results");
-            var action = new Remediation(scanResults, log);
-            action.Start();
-            log.LogInformation($"ScanUploadedBlob function done Processing blob Name:{name} Size: {myBlob.Length} Bytes");
+//             var action = new Remediation(scanResults, log);
+//             action.Start();
+//             log.LogInformation($"ScanUploadedBlob function done Processing blob Name:{name} Size: {myBlob.Length} Bytes");
+//         }
+//     }
+// }
+
+            // Metadata retrieval
+            var blob_path = name;
+            var connection_string = "DefaultEndpointsProtocol=https;AccountName=webuildstorageblob;AccountKey=jvgWPM9d++wsfBYyeXko4se/jkk9PHv1wl5bNX5Cr2hjGs1HBWJYZW8XZFeK2U+7N9z9sgxnZ5vfYXxyj1j8pw==;EndpointSuffix=core.windows.net";
+            string containerName = Environment.GetEnvironmentVariable("targetContainerName");
+            
+            BlobServiceClient blobServiceClient = new BlobServiceClient(connection_string);
+            BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(containerName);
+
+            BlobClient blobClient = containerClient.GetBlobClient(blob_path);
+            var blobUri = blobClient.Uri;
+            BlobProperties properties = blobClient.GetProperties();
+            
+            String to_be_scanned = properties.Metadata["Tobescanned"];
+
+
+
+            // Proceed with remediation of the file only if it was not already scanned
+            if (to_be_scanned == "yes")
+            {
+                var action = new Remediation(scanResults, log);
+                action.Start();
+                log.LogInformation($"ScanUploadedBlob function done Processing blob Name:{name} Size: {myBlob.Length} Bytes");
+            }
+
+            else
+            {
+                log.LogInformation($"Blob {name} was already scanned, i.e. it does not need further processing steps");
+            }
         }
     }
 }
