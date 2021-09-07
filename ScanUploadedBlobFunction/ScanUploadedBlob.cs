@@ -43,12 +43,22 @@ namespace ScanUploadedBlobFunction
             var blobUri = blobClient.Uri;
             BlobProperties properties = blobClient.GetProperties();
             
-            String to_be_scanned = properties.Metadata["Tobescanned"];
+            string to_be_scanned = "";
+            if (properties.Metadata.ContainsKey("Tobescanned"))
+            {
+                to_be_scanned = properties.Metadata["Tobescanned"];
+            }
+            else
+            {
+                properties.Metadata["Tobescanned"] = "yes"; 
+                blobClient.SetMetadata(properties.Metadata);
+                to_be_scanned = "yes";
+            }
 
 
 
             // Proceed with remediation of the file only if it was not already scanned
-            if (to_be_scanned == "yes")
+            if (to_be_scanned.Equals("yes"))
             {
                 var action = new Remediation(scanResults, log);
                 action.Start();
