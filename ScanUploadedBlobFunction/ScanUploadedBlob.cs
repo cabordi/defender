@@ -31,13 +31,17 @@ namespace ScanUploadedBlobFunction
             string connection_string = "DefaultEndpointsProtocol=https;AccountName=webuildstorageblob;AccountKey=jvgWPM9d++wsfBYyeXko4se/jkk9PHv1wl5bNX5Cr2hjGs1HBWJYZW8XZFeK2U+7N9z9sgxnZ5vfYXxyj1j8pw==;EndpointSuffix=core.windows.net";
             string containerName = Environment.GetEnvironmentVariable("targetContainerName");
             
-            BlobServiceClient blobServiceClient = new BlobServiceClient(connection_string);
-            BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(containerName);
-
-            BlobClient blobClient = containerClient.GetBlobClient(blob_path);
-            var blobUri = blobClient.Uri;
-            BlobProperties properties = blobClient.GetProperties();
+//             BlobServiceClient blobServiceClient = new BlobServiceClient(connection_string);
+//             BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(containerName);
+//             BlobClient blobClient = containerClient.GetBlobClient(blob_path);
+//             var blobUri = blobClient.Uri;
+//             BlobProperties properties = blobClient.GetProperties();
             
+            // nuovo codice
+            BlobContainerClient srcContainer = new BlobContainerClient(connection_string, containerName);
+            BlobClient srcBlob = srcContainer.GetBlobClient(blob_path);
+            BlobProperties properties = srcBlob.GetProperties();
+
             string to_be_scanned = "";
             if (properties.Metadata.ContainsKey("Tobescanned"))
             {
@@ -46,10 +50,10 @@ namespace ScanUploadedBlobFunction
             else
             {
                 properties.Metadata["Tobescanned"] = "yes"; 
-                blobClient.SetMetadata(properties.Metadata);
+                srcBlob.SetMetadata(properties.Metadata);
+                log.LogInformation("Il blob non conteneva il metadato ToBeScanned, ed è stato quindi aggiunto con valore di default uguale a yes" );
                 to_be_scanned = "yes";
             }
-
 
 
             // Proceed with remediation of the file only if it was not already scanned
@@ -59,7 +63,6 @@ namespace ScanUploadedBlobFunction
                 action.Start();
                 log.LogInformation($"ScanUploadedBlob function done Processing blob Name:{name} Size: {myBlob.Length} Bytes");
             }
-
             else
             {
                 log.LogInformation($"Blob {name} was already scanned, i.e. it does not need further processing steps");
