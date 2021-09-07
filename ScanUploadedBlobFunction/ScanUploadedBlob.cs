@@ -24,17 +24,14 @@ namespace ScanUploadedBlobFunction
             }
             log.LogInformation($"Scan Results - {scanResults.ToString(", ")}");
             log.LogInformation("Handalng Scan Results");
-//             var action = new Remediation(scanResults, log);
-//             action.Start();
-//             log.LogInformation($"ScanUploadedBlob function done Processing blob Name:{name} Size: {myBlob.Length} Bytes");
-//         }
-//     }
-// }
+
 
             // Metadata retrieval
-            var blob_path = name;
-            var connection_string = "DefaultEndpointsProtocol=https;AccountName=webuildstorageblob;AccountKey=jvgWPM9d++wsfBYyeXko4se/jkk9PHv1wl5bNX5Cr2hjGs1HBWJYZW8XZFeK2U+7N9z9sgxnZ5vfYXxyj1j8pw==;EndpointSuffix=core.windows.net";
-            string containerName = Environment.GetEnvironmentVariable("targetContainerName");
+            //string blob_path = name;
+            string blob_path = "provaVirusFake.txt";
+            string connection_string = "DefaultEndpointsProtocol=https;AccountName=webuildstorageblob;AccountKey=jvgWPM9d++wsfBYyeXko4se/jkk9PHv1wl5bNX5Cr2hjGs1HBWJYZW8XZFeK2U+7N9z9sgxnZ5vfYXxyj1j8pw==;EndpointSuffix=core.windows.net";
+            //string containerName = Environment.GetEnvironmentVariable("targetContainerName");
+            string containerName = "container1";
             
             BlobServiceClient blobServiceClient = new BlobServiceClient(connection_string);
             BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(containerName);
