@@ -27,11 +27,9 @@ namespace ScanUploadedBlobFunction
 
 
             // Metadata retrieval
-            //string blob_path = name;
-            string blob_path = "provaVirusFake.txt";
+            string blob_path = name;
             string connection_string = "DefaultEndpointsProtocol=https;AccountName=webuildstorageblob;AccountKey=jvgWPM9d++wsfBYyeXko4se/jkk9PHv1wl5bNX5Cr2hjGs1HBWJYZW8XZFeK2U+7N9z9sgxnZ5vfYXxyj1j8pw==;EndpointSuffix=core.windows.net";
-            //string containerName = Environment.GetEnvironmentVariable("targetContainerName");
-            string containerName = "container1";
+            string containerName = Environment.GetEnvironmentVariable("targetContainerName");
             
             BlobServiceClient blobServiceClient = new BlobServiceClient(connection_string);
             BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(containerName);
