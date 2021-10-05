@@ -392,6 +392,7 @@
                         "PROJECT": "LocalAntiMalware.csproj",
                         "targetContainerName": "[parameters('NameOfTargetContainer')]",
                         "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING": "[concat('@Microsoft.KeyVault(SecretUri=',reference(variables('hostStorageAccountSecretName')).secretUriWithVersion,')')]",
+                        "TARGETSTORAGEACCOUNT_CONNECTIONSTRING": "[concat('@Microsoft.KeyVault(SecretUri=',reference(variables('targetStorageAccountSecretName')).secretUriWithVersion,')')]",
                         "WEBSITE_CONTENTSHARE": "[toLower(variables('functionAppName'))]",
                         "WEBSITE_NODE_DEFAULT_VERSION": "~10",
                         "WEBSITE_RUN_FROM_PACKAGE": "[parameters('ScanUploadedBlobFunctionZipURL')]",
